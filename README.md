@@ -18,5 +18,5 @@ poetry install
 ## Usage
 
 ```bash
-uv run src/server.py
+uv run server.py
 ```
