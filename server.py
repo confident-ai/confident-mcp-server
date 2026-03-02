@@ -47,3 +47,9 @@ async def handle_messages(request: Request):
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8081)
+
+
+# Uncomment below to run MCP server using stdio (Comment above code as well)
+
+# if __name__ == "__main__":
+#     mcp.run(transport="stdio")
