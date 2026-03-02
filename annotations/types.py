@@ -42,3 +42,30 @@ class ListAnnotationsResponse(BaseModel):
 
 class GetAnnotationRequest(BaseModel):
     annotation_id: str = Field(alias="annotationId")
+
+class CreateAnnotationRequest(BaseModel):
+    trace_uuid: Optional[str] = Field(None, alias="traceUuid")
+    span_uuid: Optional[str] = Field(None, alias="spanUuid")
+    thread_id: Optional[str] = Field(None, alias="threadId")
+    
+    rating: float
+    type: Optional[Literal["THUMBS_RATING", "FIVE_STAR_RATING"]] = Field("THUMBS_RATING")
+    
+    expected_output: Optional[str] = Field(None, alias="expectedOutput")
+    expected_outcome: Optional[str] = Field(None, alias="expectedOutcome")
+    explanation: Optional[str] = None
+    user_id: Optional[str] = Field(None, alias="userId")
+
+class UpdateAnnotationRequest(BaseModel):
+    annotation_id: str = Field(alias="annotationId", exclude=True)
+    
+    rating: Optional[float] = None
+    type: Optional[Literal["THUMBS_RATING", "FIVE_STAR_RATING"]] = None
+    expected_output: Optional[str] = Field(None, alias="expectedOutput")
+    expected_outcome: Optional[str] = Field(None, alias="expectedOutcome")
+    explanation: Optional[str] = None
+
+class AnnotationMutationResponseData(BaseModel):
+    model_config = ConfigDict(populate_by_name=True)
+    
+    id: str
