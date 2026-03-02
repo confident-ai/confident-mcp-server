@@ -8,6 +8,7 @@ from .types import (
     InterpolateRequest, 
     PushRequest, 
     CreateVersionRequest,
+    CreateVersionResponse,
     PromptMessage,
     ListVersionsRequest,
     ListVersionsResponse,
@@ -149,14 +150,16 @@ async def create_prompt_version(request: CreateVersionRequest) -> str:
     - str: A confirmation message indicating the version was successfully created for the specified hash.
     """
     body = {"hash": request.hash}
-    await api.send_request(
+    response = await api.send_request(
         method=HttpMethods.POST,
         endpoint=Endpoints.PROMPTS_VERSIONS_ENDPOINT,
         path_params={"alias": request.alias},
         body=body
     )
+
+    response_data = CreateVersionResponse.model_validate(response.data)
     
-    return f"Successfully created version {request.version} for prompt {request.alias}"
+    return f"Successfully created version {response_data.version} for prompt hash {response_data.hash}"
 
 @mcp.tool()
 async def list_prompt_versions(request: ListVersionsRequest) -> ListVersionsResponse:

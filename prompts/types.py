@@ -57,6 +57,10 @@ class CreateVersionRequest(BaseModel):
     alias: str
     hash: str
 
+class CreateVersionResponse(BaseModel):
+    version: str
+    hash: str
+
 class PromptVersionItem(BaseModel):
     id: str
     version: str
