@@ -5,17 +5,15 @@
 [![MCP](https://img.shields.io/badge/MCP-Compatible-green.svg)](https://modelcontextprotocol.io)
 [![Confident AI](https://img.shields.io/badge/Confident_AI-Platform-purple.svg)](https://confident-ai.com)
 
-The Confident AI MCP Server connects AI-powered tools to [Confident AI](https://confident-ai.com), a platform to evaluate, observe, and iterate on AI quality.
+The Confident AI MCP Server connects AI-powered tools to [Confident AI](https://confident-ai.com), a platform to evaluate, observe, and iterate on AI quality. It gives you full control over your resources directly from your editor:
 
-For users of [DeepEval](https://github.com/confident-ai/deepeval), Confident AI is also the native backend and persistence layer. This MCP server gives you the ability to run evals, iterate on prompts, and use production data to directly use AI to manage all of it:
-
-It handles:
-
+- Cloud evaluations and metric collections
+- Evaluation datasets
 - Prompt versioning and management
-- Centralized evaluation datasets
 - Production tracing and observability
-- Cloud evaluations with metric collections
 - Human annotations and feedback
+
+For users of [DeepEval](https://github.com/confident-ai/deepeval), Confident AI is also the native backend and persistence layer for your evaluation results. This MCP server gives you the ability to iterate on your AI application by bringing all of that data directly into tools like Cursor and Claude Code.
 
 <p align="center">
   <img src="assets/confident-mcp-architecture.png" alt="Confident AI MCP Architecture" width="600">
@@ -23,14 +21,14 @@ It handles:
 
 ### Use Cases
 
-- **Iterate on prompts without leaving your editor.** Pull a prompt, tweak it, push it back, tag a new version — all in one conversation.
-- **Run evals and act on results immediately.** Trigger a cloud evaluation, see which test cases failed and why, then fix them — in one continuous workflow.
-- **Use human feedback to drive your next iteration.** Pull annotation data your team left on production traces and use it to decide what to fix next.
-- **Debug production issues from where you code.** Inspect traces, drill into spans, filter by errors or time range — no dashboard needed.
-- **Evaluate production traffic on the fly.** Pick a trace, thread, or span and trigger an evaluation right from your editor.
-- **Prep datasets without context-switching.** Pull datasets from Confident AI for local test runs, or simulate multi-turn conversations to stress-test your chatbot.
+Built for developers who want to iterate faster on their AI applications from inside editors like Cursor, Claude Code, and Windsurf — from simple queries to fully automated improvement workflows:
 
-Built for developers who want to manage LLM quality from inside editors like Cursor, Claude, and Windsurf — from simple queries to complex agent workflows.
+- **10x your iteration speed.** Run an eval, check if a set of prompts are better — in one continuous workflow instead of scattered across tools. What used to take an hour of tab-switching now takes one conversation.
+- **Go from eval results to action plan automatically.** Your AI assistant can pull eval results, read what failed and why, and draft a plan for what to improve next — no manual analysis needed.
+- **Use production traces for iteration.** Pull the trace, see what went in and what came out, read what users said — and fix it before anyone else notices.
+- **Let human feedback drive your next iteration.** Pull annotation data your team left on production traces and have your AI assistant use it to decide what to fix and how.
+
+Every time you leave your editor to check eval results, tweak a prompt in a dashboard, or look up what your team annotated — you lose context and iteration speed.
 
 ## Jump Ahead
 
