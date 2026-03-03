@@ -1,5 +1,10 @@
 # Confident AI MCP Server
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Python 3.12+](https://img.shields.io/badge/Python-3.12%2B-blue.svg)](https://www.python.org/downloads/)
+[![MCP](https://img.shields.io/badge/MCP-Compatible-green.svg)](https://modelcontextprotocol.io)
+[![Confident AI](https://img.shields.io/badge/Confident_AI-Platform-purple.svg)](https://confident-ai.com)
+
 The Confident AI MCP Server connects AI-powered tools directly to [Confident AI](https://confident-ai.com), the AI quality platform. This gives AI agents, coding assistants, and chatbots the ability to manage prompts, pull evaluation datasets, inspect production traces, trigger LLM evaluations, annotate outputs, and review test runs — all through natural language from inside your editor.
 
 [Confident AI](https://confident-ai.com) is the backend and persistence layer for [DeepEval](https://github.com/confident-ai/deepeval), the open-source LLM evaluation framework (think: pytest for LLMs). DeepEval runs completely on its own — locally, in CI, wherever you want. Confident AI is the optional layer that adds prompt versioning, centralized datasets, production tracing, cloud evaluations, and human annotations on top. This MCP server gives you direct access to all of it.
@@ -49,6 +54,13 @@ Confident AI hosts the MCP server for you. Pick your region:
 | AU           | [`https://au.mcp.confident-ai.com/mcp`](https://au.mcp.confident-ai.com/mcp) |
 | Self-hosted  | Use your own deployment URL                                                  |
 
+> [!TIP]
+> The examples below use the **US** server URL. For other regions, swap the URL:
+>
+> - **EU:** `https://eu.mcp.confident-ai.com/mcp`
+> - **AU:** `https://au.mcp.confident-ai.com/mcp`
+> - **Self-hosted:** Use your own deployment URL.
+
 ### Cursor
 
 Add the following to your `.cursor/mcp.json` file:
@@ -65,8 +77,6 @@ Add the following to your `.cursor/mcp.json` file:
   }
 }
 ```
-
-For EU, replace the URL with `https://eu.mcp.confident-ai.com/mcp`. For AU, use `https://au.mcp.confident-ai.com/mcp`. Self-hosting customers should use their own deployment URL.
 
 ### Claude Desktop
 
@@ -85,8 +95,6 @@ Add the following to your `claude_desktop_config.json` file:
 }
 ```
 
-For EU, replace the URL with `https://eu.mcp.confident-ai.com/mcp`. For AU, use `https://au.mcp.confident-ai.com/mcp`. Self-hosting customers should use their own deployment URL.
-
 ### Windsurf
 
 Add the following to your Windsurf MCP configuration:
@@ -103,8 +111,6 @@ Add the following to your Windsurf MCP configuration:
   }
 }
 ```
-
-For EU, replace the URL with `https://eu.mcp.confident-ai.com/mcp`. For AU, use `https://au.mcp.confident-ai.com/mcp`. Self-hosting customers should use their own deployment URL.
 
 ### Running the Server Locally
 
@@ -137,6 +143,9 @@ if __name__ == "__main__":
 
 ## Configuration
 
+> [!NOTE]
+> This section is only relevant if you're [running the server locally](#running-the-server-locally). If you're using the hosted server, the only thing you need is your API key in the quickstart configs above.
+
 The server is configured through environment variables. You can set these in a `.env` file in the project root.
 
 | Variable                        | Description                                                         | Default  |
@@ -152,7 +161,8 @@ The server is configured through environment variables. You can set these in a `
 
 ## Available Tools
 
-### Prompts
+<details>
+<summary><strong>Prompts</strong> — 7 tools</summary>
 
 Manage prompt templates with full version control — pull, push, version, and interpolate.
 
@@ -166,7 +176,10 @@ Manage prompt templates with full version control — pull, push, version, and i
 | `list_prompt_commits`   | List the full commit history of a prompt                               |
 | `list_prompts`          | List all prompts in your project                                       |
 
-### Datasets
+</details>
+
+<details>
+<summary><strong>Datasets</strong> — 2 tools</summary>
 
 Pull evaluation datasets for use in local test runs or agent workflows.
 
@@ -175,7 +188,10 @@ Pull evaluation datasets for use in local test runs or agent workflows.
 | `pull_dataset`  | Fetch a dataset (single-turn or multi-turn) by alias |
 | `list_datasets` | List all datasets in your project                    |
 
-### Evaluate
+</details>
+
+<details>
+<summary><strong>Evaluate</strong> — 2 tools</summary>
 
 Trigger cloud evaluations and simulate multi-turn conversations.
 
@@ -184,7 +200,10 @@ Trigger cloud evaluations and simulate multi-turn conversations.
 | `run_llm_evals`         | Run cloud evaluations on a batch of test cases against a metric collection                |
 | `simulate_conversation` | Simulate the next turn of a multi-turn conversation using a scenario and expected outcome |
 
-### Traces, Threads, and Spans
+</details>
+
+<details>
+<summary><strong>Traces, Threads, and Spans</strong> — 9 tools</summary>
 
 Browse, inspect, and evaluate production observability data at every level of your LLM pipeline.
 
@@ -200,7 +219,10 @@ Browse, inspect, and evaluate production observability data at every level of yo
 | `evaluate_thread` | Trigger a cloud evaluation on a conversation thread                         |
 | `evaluate_span`   | Trigger a cloud evaluation on a specific span                               |
 
-### Annotations
+</details>
+
+<details>
+<summary><strong>Annotations</strong> — 4 tools</summary>
 
 Create and manage human feedback on traces, spans, and threads.
 
@@ -211,7 +233,10 @@ Create and manage human feedback on traces, spans, and threads.
 | `create_annotation` | Create a new annotation (thumbs rating or star rating) on a trace, span, or thread |
 | `update_annotation` | Update an existing annotation's rating, explanation, or expected output            |
 
-### Test Runs
+</details>
+
+<details>
+<summary><strong>Test Runs</strong> — 2 tools</summary>
 
 Inspect past evaluation runs and their results.
 
@@ -220,7 +245,10 @@ Inspect past evaluation runs and their results.
 | `list_test_runs` | List test runs with filtering by status, time range, and multi-turn type            |
 | `get_test_run`   | Get full details of a test run, including per-test-case metric scores and reasoning |
 
-### Metric Collections
+</details>
+
+<details>
+<summary><strong>Metric Collections</strong> — 1 tool</summary>
 
 Discover available metric collections before triggering evaluations.
 
@@ -228,9 +256,12 @@ Discover available metric collections before triggering evaluations.
 | ------------------------- | ------------------------------------------------------------------- |
 | `list_metric_collections` | List all metric collections, including their metrics and thresholds |
 
-## ⚠️ Important: Public Endpoint
+</details>
 
-The hosted `/mcp` endpoint is strictly for internal development and experimental use. **It is not designed for public consumption.** The API and its underlying data structures are unstable and subject to change, breaking updates, or removal at any time without prior notice. Do not build production applications or rely on this public endpoint for any critical workflows.
+## Public Endpoint
+
+> [!CAUTION]
+> The hosted `/mcp` endpoint is strictly for internal development and experimental use. **It is not designed for public consumption.** The API and its underlying data structures are unstable and subject to change, breaking updates, or removal at any time without prior notice. Do not build production applications or rely on this public endpoint for any critical workflows.
 
 ## License
 
