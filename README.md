@@ -1,15 +1,37 @@
-# confident-mcp
+# Confident AI MCP Server
 
-Confident AI's open-source Model Context Protocol (MCP) Server.
+The Confident AI MCP Server connects AI-powered tools directly to [Confident AI](https://confident-ai.com), the AI quality platform. This gives AI agents, coding assistants, and chatbots the ability to manage prompts, pull evaluation datasets, inspect production traces, trigger LLM evaluations, annotate outputs, and review test runs — all through natural language from inside your editor.
 
-## ⚠️ Important Warning: Public Endpoint
+[Confident AI](https://confident-ai.com) is the backend and persistence layer for [DeepEval](https://github.com/confident-ai/deepeval), the open-source LLM evaluation framework (think: pytest for LLMs). DeepEval runs completely on its own — locally, in CI, wherever you want. Confident AI is the optional layer that adds prompt versioning, centralized datasets, production tracing, cloud evaluations, and human annotations on top. This MCP server gives you direct access to all of it.
 
-Please note that the hosted `/mcp` endpoint is strictly for internal development and experimental use. **It is not designed for public consumption.** The API and its underlying data structures are unstable and **subject to change, breaking updates, or removal at any time without prior notice.** Do not build production applications or rely on this public endpoint for any critical workflows. 
+## Use Cases
 
+- **Prompt Management:** Pull, push, and version your prompt templates. Track every change with commit history, assign version strings, and interpolate variables locally — all without leaving your editor.
+- **Evaluation Datasets:** Fetch your evaluation datasets (single-turn and multi-turn) from Confident AI to use in local test runs or agent workflows.
+- **LLM Evaluation:** Trigger cloud evaluations against your metric collections. Evaluate raw test cases, production traces, individual spans, or entire conversation threads. Simulate multi-turn conversations to stress-test your chatbot.
+- **Production Tracing:** Browse and inspect production traces, conversation threads, and individual spans. Filter by environment, time range, or error state. Drill into the full I/O of any step in your LLM pipeline.
+- **Human Annotations:** Create, read, and update human feedback (thumbs up/down, star ratings, expected outputs) on traces, spans, and threads. Close the loop between production behavior and evaluation.
+- **Test Run Analysis:** List and inspect past test runs. See which test cases passed or failed, review per-metric scores and reasoning, and track evaluation trends over time.
+- **Metric Collections:** Discover which metric collections are available in your project before triggering evaluations.
+
+Built for developers who want to manage their LLM quality infrastructure from inside AI-powered editors like Cursor, Claude Desktop, and Windsurf — from simple queries to complex multi-step agent workflows.
+
+## How It Works
+
+Confident AI has a full web UI where you can do all of this with a mouse. This MCP server is the same thing, but accessed from inside your editor. Think of it like the difference between the AWS web console and the AWS CLI — same platform, different interface.
+
+The server speaks the [Model Context Protocol (MCP)](https://modelcontextprotocol.io), which means any MCP-compatible client can connect to it. You don't need to learn an API or write integration code. Your AI assistant talks to the server, the server talks to Confident AI, and you get results back in natural language.
+
+The web UI isn't going anywhere. This is just another way in.
+
+## Prerequisites
+
+- A [Confident AI](https://app.confident-ai.com) account and API key
+- Python >= 3.12
 
 ## Installation
 
-This project uses [Poetry](https://python-poetry.org/) for dependency management. To install the project and its dependencies, run:
+This project uses [Poetry](https://python-poetry.org/) for dependency management.
 
 ```bash
 poetry install
@@ -17,6 +39,125 @@ poetry install
 
 ## Usage
 
+Start the server in SSE mode (default):
+
 ```bash
 uv run server.py
 ```
+
+The server will start on `http://0.0.0.0:8081` with two endpoints:
+
+| Endpoint    | Method | Description                                 |
+| ----------- | ------ | ------------------------------------------- |
+| `/mcp`      | GET    | SSE connection endpoint for MCP clients     |
+| `/messages` | POST   | Message passing endpoint for tool execution |
+
+Both endpoints require a `Bearer` token in the `Authorization` header (your Confident AI API key).
+
+To run in stdio mode instead (for local MCP clients that communicate over stdin/stdout), uncomment the relevant block at the bottom of `server.py`:
+
+```python
+if __name__ == "__main__":
+    mcp.run(transport="stdio")
+```
+
+## Configuration
+
+The server is configured through environment variables. You can set these in a `.env` file in the project root.
+
+| Variable                        | Description                                                         | Default  |
+| ------------------------------- | ------------------------------------------------------------------- | -------- |
+| `CONFIDENT_API_KEY`             | Your Confident AI API key                                           | Required |
+| `CONFIDENT_ENVIRONMENT`         | `LOCAL`, `PROD`, or `ON_PREM`                                       | `LOCAL`  |
+| `CONFIDENT_REGION`              | `US`, `EU`, or `AU` (only used when `CONFIDENT_ENVIRONMENT=PROD`)   | `US`     |
+| `CONFIDENT_BACKEND_LOCAL_URL`   | Backend URL for local development                                   | —        |
+| `CONFIDENT_BACKEND_US_PROD_URL` | US production backend URL                                           | —        |
+| `CONFIDENT_BACKEND_EU_PROD_URL` | EU production backend URL                                           | —        |
+| `CONFIDENT_BACKEND_AU_PROD_URL` | AU production backend URL                                           | —        |
+| `CONFIDENT_BACKEND_ON_PREM_URL` | On-prem backend URL (required when `CONFIDENT_ENVIRONMENT=ON_PREM`) | —        |
+
+## Available Tools
+
+### Prompts
+
+Manage prompt templates with full version control — pull, push, version, and interpolate.
+
+| Tool                    | Description                                                            |
+| ----------------------- | ---------------------------------------------------------------------- |
+| `pull_prompt`           | Fetch a prompt by alias, version, label, or commit hash                |
+| `push_prompt`           | Create or update a prompt template on Confident AI                     |
+| `interpolate_prompt`    | Locally render a prompt template by replacing placeholders with values |
+| `create_prompt_version` | Assign a version string to a specific prompt commit                    |
+| `list_prompt_versions`  | List all formal versions of a prompt                                   |
+| `list_prompt_commits`   | List the full commit history of a prompt                               |
+| `list_prompts`          | List all prompts in your project                                       |
+
+### Datasets
+
+Pull evaluation datasets for use in local test runs or agent workflows.
+
+| Tool            | Description                                          |
+| --------------- | ---------------------------------------------------- |
+| `pull_dataset`  | Fetch a dataset (single-turn or multi-turn) by alias |
+| `list_datasets` | List all datasets in your project                    |
+
+### Evaluate
+
+Trigger cloud evaluations and simulate multi-turn conversations.
+
+| Tool                    | Description                                                                               |
+| ----------------------- | ----------------------------------------------------------------------------------------- |
+| `run_llm_evals`         | Run cloud evaluations on a batch of test cases against a metric collection                |
+| `simulate_conversation` | Simulate the next turn of a multi-turn conversation using a scenario and expected outcome |
+
+### Traces, Threads, and Spans
+
+Browse, inspect, and evaluate production observability data at every level of your LLM pipeline.
+
+| Tool              | Description                                                                 |
+| ----------------- | --------------------------------------------------------------------------- |
+| `list_traces`     | List traces with filtering by environment, time range, and sort order       |
+| `get_trace`       | Get full details of a specific trace, including all spans                   |
+| `list_threads`    | List conversation threads with filtering and pagination                     |
+| `get_thread`      | Get full details of a thread, including all traces and thread-level metrics |
+| `list_spans`      | List spans with filtering by type, error state, prompt version, and more    |
+| `get_span`        | Get full details of a span, including I/O, cost, metrics, and annotations   |
+| `evaluate_trace`  | Trigger a cloud evaluation on a specific trace                              |
+| `evaluate_thread` | Trigger a cloud evaluation on a conversation thread                         |
+| `evaluate_span`   | Trigger a cloud evaluation on a specific span                               |
+
+### Annotations
+
+Create and manage human feedback on traces, spans, and threads.
+
+| Tool                | Description                                                                        |
+| ------------------- | ---------------------------------------------------------------------------------- |
+| `list_annotations`  | List annotations with filtering by target, type, and rating range                  |
+| `get_annotation`    | Get full details of a specific annotation                                          |
+| `create_annotation` | Create a new annotation (thumbs rating or star rating) on a trace, span, or thread |
+| `update_annotation` | Update an existing annotation's rating, explanation, or expected output            |
+
+### Test Runs
+
+Inspect past evaluation runs and their results.
+
+| Tool             | Description                                                                         |
+| ---------------- | ----------------------------------------------------------------------------------- |
+| `list_test_runs` | List test runs with filtering by status, time range, and multi-turn type            |
+| `get_test_run`   | Get full details of a test run, including per-test-case metric scores and reasoning |
+
+### Metric Collections
+
+Discover available metric collections before triggering evaluations.
+
+| Tool                      | Description                                                         |
+| ------------------------- | ------------------------------------------------------------------- |
+| `list_metric_collections` | List all metric collections, including their metrics and thresholds |
+
+## ⚠️ Important: Public Endpoint
+
+The hosted `/mcp` endpoint is strictly for internal development and experimental use. **It is not designed for public consumption.** The API and its underlying data structures are unstable and subject to change, breaking updates, or removal at any time without prior notice. Do not build production applications or rely on this public endpoint for any critical workflows.
+
+## License
+
+This project is licensed under the terms of the [MIT License](LICENSE).
