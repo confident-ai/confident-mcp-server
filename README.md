@@ -6,19 +6,19 @@ The Confident AI MCP Server connects AI-powered tools directly to [Confident AI]
 
 ## Use Cases
 
-- **Prompt Management:** Pull, push, and version your prompt templates. Track every change with commit history, assign version strings, and interpolate variables locally — all without leaving your editor.
-- **Evaluation Datasets:** Fetch your evaluation datasets (single-turn and multi-turn) from Confident AI to use in local test runs or agent workflows.
-- **LLM Evaluation:** Trigger cloud evaluations against your metric collections. Evaluate raw test cases, production traces, individual spans, or entire conversation threads. Simulate multi-turn conversations to stress-test your chatbot.
-- **Production Tracing:** Browse and inspect production traces, conversation threads, and individual spans. Filter by environment, time range, or error state. Drill into the full I/O of any step in your LLM pipeline.
-- **Human Annotations:** Create, read, and update human feedback (thumbs up/down, star ratings, expected outputs) on traces, spans, and threads. Close the loop between production behavior and evaluation.
-- **Test Run Analysis:** List and inspect past test runs. See which test cases passed or failed, review per-metric scores and reasoning, and track evaluation trends over time.
-- **Metric Collections:** Discover which metric collections are available in your project before triggering evaluations.
+- **Iterate on prompts without leaving your editor.** Pull your latest prompt, tweak the template, push it back, and tag a new version — all from a single conversation with your AI assistant. No tab-switching, no copy-pasting between browser windows.
+- **Run an evaluation and act on the results immediately.** Trigger a cloud evaluation against your metric collection, see exactly which test cases failed and why, then use those results to guide your next code change — in one continuous workflow.
+- **Use human feedback to drive your next iteration.** Pull annotation data (thumbs up/down, star ratings, expected outputs) that your team left on production traces, and use it as context to decide what to fix or improve next.
+- **Debug production issues from where you code.** Inspect traces, drill into individual spans, filter by errors or time range — find out what went wrong in production without opening a dashboard.
+- **Evaluate production traffic on the fly.** Pick a trace, thread, or span from production and trigger an evaluation against it right from your editor. No need to set up a test harness.
+- **Prep evaluation datasets without context-switching.** Pull your existing datasets from Confident AI and use them in local test runs or agent workflows, or simulate multi-turn conversations to stress-test your chatbot.
 
 Built for developers who want to manage their LLM quality infrastructure from inside AI-powered editors like Cursor, Claude Desktop, and Windsurf — from simple queries to complex multi-step agent workflows.
 
 ## Jump Ahead
 
 - [How It Works](#how-it-works) — What this server does and how it connects to Confident AI
+- [Prerequisites](#prerequisites) — What you need before you start
 - [Quickstart](#quickstart) — Get up and running in under a minute
   - [Cursor](#cursor) · [Claude Desktop](#claude-desktop) · [Windsurf](#windsurf) · [Run Locally](#running-the-server-locally)
 - [Configuration](#configuration) — Environment variables for regions, on-prem, and advanced setup
@@ -33,9 +33,12 @@ The server speaks the [Model Context Protocol (MCP)](https://modelcontextprotoco
 
 The web UI isn't going anywhere. This is just another way in.
 
-## Quickstart
+## Prerequisites
 
-You need a Confident AI API key. If you don't have one, [sign up and grab your key here](https://app.confident-ai.com).
+1. A [Confident AI API key](https://app.confident-ai.com).
+2. An MCP-compatible client — [Cursor](https://www.cursor.com), [Claude Desktop](https://claude.ai/download), [Windsurf](https://windsurf.com), or any other client that supports the Model Context Protocol.
+
+## Quickstart
 
 Confident AI hosts the MCP server for you. Pick your region:
 
