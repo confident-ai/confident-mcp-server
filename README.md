@@ -9,7 +9,7 @@ The Confident AI MCP Server connects AI-powered tools directly to [Confident AI]
 
 [Confident AI](https://confident-ai.com) is the backend and persistence layer for [DeepEval](https://github.com/confident-ai/deepeval), the open-source LLM evaluation framework (think: pytest for LLMs). DeepEval runs completely on its own — locally, in CI, wherever you want. Confident AI is the optional layer that adds prompt versioning, centralized datasets, production tracing, cloud evaluations, and human annotations on top. This MCP server gives you direct access to all of it.
 
-## Use Cases
+### Use Cases
 
 - **Iterate on prompts without leaving your editor.** Pull your latest prompt, tweak the template, push it back, and tag a new version — all from a single conversation with your AI assistant. No tab-switching, no copy-pasting between browser windows.
 - **Run an evaluation and act on the results immediately.** Trigger a cloud evaluation against your metric collection, see exactly which test cases failed and why, then use those results to guide your next code change — in one continuous workflow.
