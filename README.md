@@ -25,7 +25,7 @@ Built for developers who want to manage their LLM quality infrastructure from in
 - [Why MCP for Evals?](#why-mcp-for-evals) — Why this exists and how it connects to Confident AI
 - [Prerequisites](#prerequisites) — What you need before you start
 - [Quickstart](#quickstart) — Get up and running in under a minute
-  - [Cursor](#cursor) · [Claude Desktop](#claude-desktop) · [Windsurf](#windsurf) · [Run Locally](#running-the-server-locally)
+  - [Cursor](#cursor) · [Claude Code (or Desktop)](#claude-code-or-desktop) · [Windsurf](#windsurf) · [Run Locally](#running-the-server-locally)
 - [Configuration](#configuration) — Environment variables for regions, on-prem, and advanced setup
 - [Available Tools](#available-tools) — Full reference of all 27 tools
 - [License](#license)
@@ -56,7 +56,7 @@ The server speaks the [Model Context Protocol (MCP)](https://modelcontextprotoco
 ## Prerequisites
 
 1. A [Confident AI API key](https://app.confident-ai.com).
-2. An MCP-compatible client — [Cursor](https://www.cursor.com), [Claude Desktop](https://claude.ai/download), [Windsurf](https://windsurf.com), or any other client that supports the Model Context Protocol.
+2. An MCP-compatible client — [Cursor](https://www.cursor.com), [Claude](https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview), [Windsurf](https://windsurf.com), or any other client that supports the Model Context Protocol.
 
 ## Quickstart
 
@@ -74,9 +74,9 @@ Confident AI hosts the MCP server for you. Pick your region:
 >
 > - **EU:** `https://eu.mcp.confident-ai.com/mcp`
 > - **AU:** `https://au.mcp.confident-ai.com/mcp`
-> - **Self-hosted:** Use your own deployment URL.
+> - **Self-hosted / On-prem:** If you're running your own instance of Confident AI, you can run this MCP server yourself and point it at your deployment. See [Running the Server Locally](#-running-the-server-locally) for setup instructions.
 
-### Cursor
+### 🖥️ Cursor
 
 Add the following to your `.cursor/mcp.json` file:
 
@@ -93,9 +93,18 @@ Add the following to your `.cursor/mcp.json` file:
 }
 ```
 
-### Claude Desktop
+### 🤖 Claude Code (or Desktop)
 
-Add the following to your `claude_desktop_config.json` file:
+**Claude Code** — run the following command in your terminal:
+
+```bash
+claude mcp add confident-ai \
+  --transport sse \
+  --url https://mcp.confident-ai.com/mcp \
+  --header "Authorization: Bearer <YOUR_CONFIDENT_API_KEY>"
+```
+
+**Claude Desktop** — add the following to your `claude_desktop_config.json` file:
 
 ```json
 {
@@ -110,7 +119,7 @@ Add the following to your `claude_desktop_config.json` file:
 }
 ```
 
-### Windsurf
+### 🏄 Windsurf
 
 Add the following to your Windsurf MCP configuration:
 
@@ -127,7 +136,7 @@ Add the following to your Windsurf MCP configuration:
 }
 ```
 
-### Running the Server Locally
+### 🛠️ Running the Server Locally
 
 If you're self-hosting or contributing to this project, you can run the server from source.
 
