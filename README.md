@@ -24,24 +24,84 @@ The server speaks the [Model Context Protocol (MCP)](https://modelcontextprotoco
 
 The web UI isn't going anywhere. This is just another way in.
 
-## Prerequisites
+## Quickstart
 
-- A [Confident AI](https://app.confident-ai.com) account and API key
-- Python >= 3.12
+You need a Confident AI API key. If you don't have one, [sign up and grab your key here](https://app.confident-ai.com).
 
-## Installation
+Confident AI hosts the MCP server for you. Pick your region:
 
-This project uses [Poetry](https://python-poetry.org/) for dependency management.
+| Region       | MCP Server URL                                                               |
+| ------------ | ---------------------------------------------------------------------------- |
+| US (default) | [`https://mcp.confident-ai.com/mcp`](https://mcp.confident-ai.com/mcp)       |
+| EU           | [`https://eu.mcp.confident-ai.com/mcp`](https://eu.mcp.confident-ai.com/mcp) |
+| AU           | [`https://au.mcp.confident-ai.com/mcp`](https://au.mcp.confident-ai.com/mcp) |
+| Self-hosted  | Use your own deployment URL                                                  |
+
+### Cursor
+
+Add the following to your `.cursor/mcp.json` file:
+
+```json
+{
+  "mcpServers": {
+    "confident-ai": {
+      "url": "https://mcp.confident-ai.com/mcp",
+      "headers": {
+        "Authorization": "Bearer <YOUR_CONFIDENT_API_KEY>"
+      }
+    }
+  }
+}
+```
+
+For EU, replace the URL with `https://eu.mcp.confident-ai.com/mcp`. For AU, use `https://au.mcp.confident-ai.com/mcp`. Self-hosting customers should use their own deployment URL.
+
+### Claude Desktop
+
+Add the following to your `claude_desktop_config.json` file:
+
+```json
+{
+  "mcpServers": {
+    "confident-ai": {
+      "url": "https://mcp.confident-ai.com/mcp",
+      "headers": {
+        "Authorization": "Bearer <YOUR_CONFIDENT_API_KEY>"
+      }
+    }
+  }
+}
+```
+
+For EU, replace the URL with `https://eu.mcp.confident-ai.com/mcp`. For AU, use `https://au.mcp.confident-ai.com/mcp`. Self-hosting customers should use their own deployment URL.
+
+### Windsurf
+
+Add the following to your Windsurf MCP configuration:
+
+```json
+{
+  "mcpServers": {
+    "confident-ai": {
+      "serverUrl": "https://mcp.confident-ai.com/mcp",
+      "headers": {
+        "Authorization": "Bearer <YOUR_CONFIDENT_API_KEY>"
+      }
+    }
+  }
+}
+```
+
+For EU, replace the URL with `https://eu.mcp.confident-ai.com/mcp`. For AU, use `https://au.mcp.confident-ai.com/mcp`. Self-hosting customers should use their own deployment URL.
+
+### Running the Server Locally
+
+If you're self-hosting or contributing to this project, you can run the server from source.
+
+**Prerequisites:** Python >= 3.12, [Poetry](https://python-poetry.org/)
 
 ```bash
 poetry install
-```
-
-## Usage
-
-Start the server in SSE mode (default):
-
-```bash
 uv run server.py
 ```
 
@@ -52,9 +112,11 @@ The server will start on `http://0.0.0.0:8081` with two endpoints:
 | `/mcp`      | GET    | SSE connection endpoint for MCP clients     |
 | `/messages` | POST   | Message passing endpoint for tool execution |
 
-Both endpoints require a `Bearer` token in the `Authorization` header (your Confident AI API key).
+Both endpoints require a `Bearer` token in the `Authorization` header (your [Confident AI API key](https://app.confident-ai.com)).
 
-To run in stdio mode instead (for local MCP clients that communicate over stdin/stdout), uncomment the relevant block at the bottom of `server.py`:
+When running locally, point your MCP client to `http://localhost:8081/mcp` instead of the hosted URLs above.
+
+To run in stdio mode instead (for MCP clients that communicate over stdin/stdout), uncomment the relevant block at the bottom of `server.py`:
 
 ```python
 if __name__ == "__main__":
