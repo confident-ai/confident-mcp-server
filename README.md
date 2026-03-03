@@ -16,6 +16,15 @@ The Confident AI MCP Server connects AI-powered tools directly to [Confident AI]
 
 Built for developers who want to manage their LLM quality infrastructure from inside AI-powered editors like Cursor, Claude Desktop, and Windsurf — from simple queries to complex multi-step agent workflows.
 
+## Jump Ahead
+
+- [How It Works](#how-it-works) — What this server does and how it connects to Confident AI
+- [Quickstart](#quickstart) — Get up and running in under a minute
+  - [Cursor](#cursor) · [Claude Desktop](#claude-desktop) · [Windsurf](#windsurf) · [Run Locally](#running-the-server-locally)
+- [Configuration](#configuration) — Environment variables for regions, on-prem, and advanced setup
+- [Available Tools](#available-tools) — Full reference of all 27 tools
+- [License](#license)
+
 ## How It Works
 
 Confident AI has a full web UI where you can do all of this with a mouse. This MCP server is the same thing, but accessed from inside your editor. Think of it like the difference between the AWS web console and the AWS CLI — same platform, different interface.
