@@ -143,7 +143,7 @@ async def list_traces(request: ListTracesRequest) -> ListTracesResponse:
        - start (Optional[str]): Filter for traces after this ISO datetime.
        - end (Optional[str]): Filter for traces before this ISO datetime.
        - sort_by (Optional[str]): Field to sort by ('createdAt' or 'endedAt').
-       - ascending (Optional[bool]): Sort order (default: False).
+       - ascending (Optional[Literal["true", "false"]]): Sort ascending as string ("true" or "false")
 
     Response:
      - ListTracesResponse: A list of trace summaries and the total count available.
@@ -171,7 +171,7 @@ async def list_threads(request: ListThreadsRequest) -> ListThreadsResponse:
        - start (Optional[str]): Filter for threads created after this ISO datetime.
        - end (Optional[str]): Filter for threads created before this ISO datetime.
        - sort_by (Optional[str]): Field to sort by ('createdAt' or 'lastActivity').
-       - ascending (Optional[bool]): Sort order (default: False).
+       - ascending (Optional[Literal["true", "false"]]): Sort ascending as string ("true" or "false")
 
     Response:
      - ListThreadsResponse: A list of thread summaries and the total count available.

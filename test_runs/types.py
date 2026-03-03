@@ -7,7 +7,7 @@ class ListTestRunsRequest(BaseModel):
     status: Optional[Literal["COMPLETED", "ERRORED", "IN_PROGRESS", "CANCELLED"]] = None
     multi_turn: Optional[Literal["true", "false"]] = Field(None, alias="multiTurn")
     sort_by: Optional[Literal["createdAt", "runDuration"]] = Field("createdAt", alias="sortBy")
-    ascending: Optional[Literal["asc", "desc"]] = None
+    ascending: Optional[bool] = False
     start: Optional[str] = None
     end: Optional[str] = None
 
