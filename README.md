@@ -5,17 +5,17 @@
 [![MCP](https://img.shields.io/badge/MCP-Compatible-green.svg)](https://modelcontextprotocol.io)
 [![Confident AI](https://img.shields.io/badge/Confident_AI-Platform-purple.svg)](https://confident-ai.com)
 
-The Confident AI MCP Server connects AI-powered tools to [Confident AI](https://confident-ai.com), the AI quality platform. Manage prompts, pull datasets, inspect traces, trigger evaluations, annotate outputs, and review test runs — all through natural language from inside your editor.
+The Confident AI MCP Server connects AI-powered tools to [Confident AI](https://confident-ai.com), a platform to evaluate, observe, and iterate on AI quality.
 
-[Confident AI](https://confident-ai.com) is the AI quality platform. It handles:
+For users of [DeepEval](https://github.com/confident-ai/deepeval), Confident AI is also the native backend and persistence layer. This MCP server gives you the ability to run evals, iterate on prompts, and use production data to directly use AI to manage all of it:
+
+It handles:
 
 - Prompt versioning and management
 - Centralized evaluation datasets
 - Production tracing and observability
 - Cloud evaluations with metric collections
 - Human annotations and feedback
-
-It also powers the backend and persistence layer for [DeepEval](https://github.com/confident-ai/deepeval), the open-source LLM evaluation framework (pytest for LLMs). This MCP server gives you direct access to all of it.
 
 <p align="center">
   <img src="assets/confident-mcp-architecture.png" alt="Confident AI MCP Architecture" width="600">
