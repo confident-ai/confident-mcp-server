@@ -16,7 +16,7 @@ The Confident AI MCP Server connects AI-powered tools to [Confident AI](https://
 For users of [DeepEval](https://github.com/confident-ai/deepeval), Confident AI is also the native backend and persistence layer for your evaluation results. This MCP server gives you the ability to iterate on your AI application by bringing all of that data directly into tools like Cursor and Claude Code.
 
 > [!WARNING]
-> This MCP server is currently in **beta**. We invite everyone to try it out but also reach out to the [Confident AI team](https://confident-ai.com) before doing so to avoid surprisesin functionality.
+> This MCP server is currently in **beta**. We invite everyone to try it out but also reach out to the [Confident AI team](https://confident-ai.com/book-a-demo) before doing so to avoid any surprises in functionality.
 
 <p align="center">
   <img src="assets/confident-mcp-architecture.png" alt="Confident AI MCP Architecture" width="600">
