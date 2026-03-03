@@ -22,7 +22,7 @@ Built for developers who want to manage their LLM quality infrastructure from in
 
 ## Jump Ahead
 
-- [How It Works](#how-it-works) — What this server does and how it connects to Confident AI
+- [Why MCP for Evals?](#why-mcp-for-evals) — Why this exists and how it connects to Confident AI
 - [Prerequisites](#prerequisites) — What you need before you start
 - [Quickstart](#quickstart) — Get up and running in under a minute
   - [Cursor](#cursor) · [Claude Desktop](#claude-desktop) · [Windsurf](#windsurf) · [Run Locally](#running-the-server-locally)
@@ -30,13 +30,28 @@ Built for developers who want to manage their LLM quality infrastructure from in
 - [Available Tools](#available-tools) — Full reference of all 27 tools
 - [License](#license)
 
-## How It Works
+## Why MCP for Evals?
 
-Confident AI has a full web UI where you can do all of this with a mouse. This MCP server is the same thing, but accessed from inside your editor. Think of it like the difference between the AWS web console and the AWS CLI — same platform, different interface.
+Evaluating LLMs is iterative. A typical loop looks like:
 
-The server speaks the [Model Context Protocol (MCP)](https://modelcontextprotocol.io), which means any MCP-compatible client can connect to it. You don't need to learn an API or write integration code. Your AI assistant talks to the server, the server talks to Confident AI, and you get results back in natural language.
+1. Run evals
+2. Read the results
+3. Tweak a prompt
+4. Re-run
+5. Check traces, read annotations your team left
+6. Repeat
 
-The web UI isn't going anywhere. This is just another way in.
+Today that means bouncing between your editor, a dashboard, and maybe a notebook. Every tab switch breaks your flow.
+
+This MCP server puts that entire loop inside your editor:
+
+- Pull a prompt, push a change, trigger an evaluation
+- Inspect the failures, check what your team annotated
+- Decide what to fix next — all in one conversation with your AI assistant
+
+Confident AI has a full [web UI](https://app.confident-ai.com) where you can do all of this with a mouse. This is the same platform, accessed from your editor instead. Think: AWS web console vs. AWS CLI — same resources, different interface.
+
+The server speaks the [Model Context Protocol (MCP)](https://modelcontextprotocol.io), so any compatible client connects out of the box. The web UI isn't going anywhere. This is just another way in.
 
 ## Prerequisites
 
