@@ -7,7 +7,15 @@
 
 The Confident AI MCP Server connects AI-powered tools to [Confident AI](https://confident-ai.com), the AI quality platform. Manage prompts, pull datasets, inspect traces, trigger evaluations, annotate outputs, and review test runs — all through natural language from inside your editor.
 
-[Confident AI](https://confident-ai.com) is the backend and persistence layer for [DeepEval](https://github.com/confident-ai/deepeval), the open-source LLM evaluation framework (pytest for LLMs). DeepEval runs completely on its own. Confident AI is the optional layer that adds prompt versioning, centralized datasets, production tracing, cloud evaluations, and human annotations on top. This MCP server gives you direct access to all of it.
+[Confident AI](https://confident-ai.com) is the AI quality platform. It handles:
+
+- Prompt versioning and management
+- Centralized evaluation datasets
+- Production tracing and observability
+- Cloud evaluations with metric collections
+- Human annotations and feedback
+
+It also powers the backend and persistence layer for [DeepEval](https://github.com/confident-ai/deepeval), the open-source LLM evaluation framework (pytest for LLMs). This MCP server gives you direct access to all of it.
 
 <p align="center">
   <img src="assets/confident-mcp-architecture.png" alt="Confident AI MCP Architecture" width="600">
