@@ -57,7 +57,7 @@ async def evaluate_thread(evaluate_thread_request_body: EvaluateThreadRequestBod
 
     Args:
     - evaluate_thread_request_body
-    - metric_collection (str): The name of the metric collection to use for evaluation.
+    - metric_collection (str): The name of the metric collection to use for evaluation. Must be a multi-turn metric collection
     - overwrite_metrics (bool): Whether to overwrite existing evaluation results for this thread.
     - chatbot_role (Optional[str]): The role name assigned to the chatbot in this thread for evaluation context.
     - thread_id (str): The identifier of the thread to be evaluated.
