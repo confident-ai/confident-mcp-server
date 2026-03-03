@@ -5,20 +5,20 @@
 [![MCP](https://img.shields.io/badge/MCP-Compatible-green.svg)](https://modelcontextprotocol.io)
 [![Confident AI](https://img.shields.io/badge/Confident_AI-Platform-purple.svg)](https://confident-ai.com)
 
-The Confident AI MCP Server connects AI-powered tools directly to [Confident AI](https://confident-ai.com), the AI quality platform. This gives AI agents, coding assistants, and chatbots the ability to manage prompts, pull evaluation datasets, inspect production traces, trigger LLM evaluations, annotate outputs, and review test runs — all through natural language from inside your editor.
+The Confident AI MCP Server connects AI-powered tools to [Confident AI](https://confident-ai.com), the AI quality platform. Manage prompts, pull datasets, inspect traces, trigger evaluations, annotate outputs, and review test runs — all through natural language from inside your editor.
 
-[Confident AI](https://confident-ai.com) is the backend and persistence layer for [DeepEval](https://github.com/confident-ai/deepeval), the open-source LLM evaluation framework (think: pytest for LLMs). DeepEval runs completely on its own — locally, in CI, wherever you want. Confident AI is the optional layer that adds prompt versioning, centralized datasets, production tracing, cloud evaluations, and human annotations on top. This MCP server gives you direct access to all of it.
+[Confident AI](https://confident-ai.com) is the backend and persistence layer for [DeepEval](https://github.com/confident-ai/deepeval), the open-source LLM evaluation framework (pytest for LLMs). DeepEval runs completely on its own. Confident AI is the optional layer that adds prompt versioning, centralized datasets, production tracing, cloud evaluations, and human annotations on top. This MCP server gives you direct access to all of it.
 
 ### Use Cases
 
-- **Iterate on prompts without leaving your editor.** Pull your latest prompt, tweak the template, push it back, and tag a new version — all from a single conversation with your AI assistant. No tab-switching, no copy-pasting between browser windows.
-- **Run an evaluation and act on the results immediately.** Trigger a cloud evaluation against your metric collection, see exactly which test cases failed and why, then use those results to guide your next code change — in one continuous workflow.
-- **Use human feedback to drive your next iteration.** Pull annotation data (thumbs up/down, star ratings, expected outputs) that your team left on production traces, and use it as context to decide what to fix or improve next.
-- **Debug production issues from where you code.** Inspect traces, drill into individual spans, filter by errors or time range — find out what went wrong in production without opening a dashboard.
-- **Evaluate production traffic on the fly.** Pick a trace, thread, or span from production and trigger an evaluation against it right from your editor. No need to set up a test harness.
-- **Prep evaluation datasets without context-switching.** Pull your existing datasets from Confident AI and use them in local test runs or agent workflows, or simulate multi-turn conversations to stress-test your chatbot.
+- **Iterate on prompts without leaving your editor.** Pull a prompt, tweak it, push it back, tag a new version — all in one conversation.
+- **Run evals and act on results immediately.** Trigger a cloud evaluation, see which test cases failed and why, then fix them — in one continuous workflow.
+- **Use human feedback to drive your next iteration.** Pull annotation data your team left on production traces and use it to decide what to fix next.
+- **Debug production issues from where you code.** Inspect traces, drill into spans, filter by errors or time range — no dashboard needed.
+- **Evaluate production traffic on the fly.** Pick a trace, thread, or span and trigger an evaluation right from your editor.
+- **Prep datasets without context-switching.** Pull datasets from Confident AI for local test runs, or simulate multi-turn conversations to stress-test your chatbot.
 
-Built for developers who want to manage their LLM quality infrastructure from inside AI-powered editors like Cursor, Claude Desktop, and Windsurf — from simple queries to complex multi-step agent workflows.
+Built for developers who want to manage LLM quality from inside editors like Cursor, Claude, and Windsurf — from simple queries to complex agent workflows.
 
 ## Jump Ahead
 
