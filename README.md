@@ -30,7 +30,7 @@ Built for developers who want to iterate faster on their AI applications from in
 
 Every time you leave your editor to check eval results, tweak a prompt in a dashboard, or look up what your team annotated — you lose context and iteration speed.
 
-### Why MCP for Evals?
+### How is this different from the platform?
 
 Confident AI has a full [web UI](https://app.confident-ai.com) where you can do all of this with a mouse. This MCP server is the same platform, accessed from your editor instead. Think: AWS web console vs. AWS CLI — same resources, different interface.
 
@@ -38,7 +38,6 @@ The server speaks the [Model Context Protocol (MCP)](https://modelcontextprotoco
 
 ## Jump Ahead
 
-- [Why MCP for Evals?](#why-mcp-for-evals) — Why this exists and how it connects to Confident AI
 - [Prerequisites](#prerequisites) — What you need before you start
 - [Quickstart](#quickstart) — Get up and running in under a minute
   - [Cursor](#cursor) · [Claude Code (or Desktop)](#claude-code-or-desktop) · [Windsurf](#windsurf) · [Run Locally](#running-the-server-locally)
