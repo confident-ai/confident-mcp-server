@@ -30,6 +30,12 @@ Built for developers who want to iterate faster on their AI applications from in
 
 Every time you leave your editor to check eval results, tweak a prompt in a dashboard, or look up what your team annotated — you lose context and iteration speed.
 
+### Why MCP for Evals?
+
+Confident AI has a full [web UI](https://app.confident-ai.com) where you can do all of this with a mouse. This MCP server is the same platform, accessed from your editor instead. Think: AWS web console vs. AWS CLI — same resources, different interface.
+
+The server speaks the [Model Context Protocol (MCP)](https://modelcontextprotocol.io), so any compatible client connects out of the box. The web UI isn't going anywhere. This is just another way in.
+
 ## Jump Ahead
 
 - [Why MCP for Evals?](#why-mcp-for-evals) — Why this exists and how it connects to Confident AI
@@ -39,29 +45,6 @@ Every time you leave your editor to check eval results, tweak a prompt in a dash
 - [Configuration](#configuration) — Environment variables for regions, on-prem, and advanced setup
 - [Available Tools](#available-tools) — Full reference of all 27 tools
 - [License](#license)
-
-## Why MCP for Evals?
-
-Evaluating LLMs is iterative. A typical loop looks like:
-
-1. Run evals
-2. Read the results
-3. Tweak a prompt
-4. Re-run
-5. Check traces, read annotations your team left
-6. Repeat
-
-Today that means bouncing between your editor, a dashboard, and maybe a notebook. Every tab switch breaks your flow.
-
-This MCP server puts that entire loop inside your editor:
-
-- Pull a prompt, push a change, trigger an evaluation
-- Inspect the failures, check what your team annotated
-- Decide what to fix next — all in one conversation with your AI assistant
-
-Confident AI has a full [web UI](https://app.confident-ai.com) where you can do all of this with a mouse. This is the same platform, accessed from your editor instead. Think: AWS web console vs. AWS CLI — same resources, different interface.
-
-The server speaks the [Model Context Protocol (MCP)](https://modelcontextprotocol.io), so any compatible client connects out of the box. The web UI isn't going anywhere. This is just another way in.
 
 ## Prerequisites
 
