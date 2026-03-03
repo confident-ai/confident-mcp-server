@@ -199,7 +199,7 @@ class ListSpansRequest(BaseModel):
     start: Optional[str] = None
     end: Optional[str] = None
     sort_by: Optional[Literal["createdAt", "endedAt", "cost", "duration", "name"]] = Field("createdAt", alias="sortBy")
-    ascending: Optional[bool] = None
+    ascending: Optional[Literal["asc", "desc"]] = None
     environment: Optional[Literal["production", "testing", "development", "staging"]] = None
     type: Optional[str] = None  # e.g., 'agent', 'llm', 'retriever', 'tool'
     trace_uuid: Optional[str] = Field(None, alias="traceUuid")

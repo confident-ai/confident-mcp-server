@@ -8,6 +8,7 @@ from .types import (
     InterpolateRequest, 
     PushRequest, 
     CreateVersionRequest,
+    CreateVersionResponse,
     PromptMessage,
     ListVersionsRequest,
     ListVersionsResponse,
@@ -58,7 +59,7 @@ async def pull_prompt(request: PullRequest) -> PromptResponse:
     
     # 3. Map the API response to our MCP types
     data = response.data
-    config = PromptData(
+    prompt_data = PromptData(
         alias=request.alias,
         type=data["type"],
         text_template=data.get("text"),
@@ -67,7 +68,7 @@ async def pull_prompt(request: PullRequest) -> PromptResponse:
     )
     
     return PromptResponse(
-        config=config,
+        prompt_data=prompt_data,
         hash=data["hash"],
         version=data.get("version"),
         label=data.get("label")
@@ -77,48 +78,48 @@ async def pull_prompt(request: PullRequest) -> PromptResponse:
 def interpolate_prompt(request: InterpolateRequest) -> Union[str, List[PromptMessage]]:
     """
     This tool can be used to locally render a prompt template by replacing placeholders with actual values. 
-    It supports various formats like {variable} or {{variable}} depending on the prompt's configuration.
+    It supports various formats like {variable} or {{variable}} depending on the prompt's prompt_datauration.
     This is a local operation and does not hit the Confident AI API.
 
     Args:
     - request
-    - config (PromptData): The prompt's data object containing templates and settings (obtained from pull_prompt).
+    - prompt_data (PromptData): The prompt's data object containing templates and settings (obtained from pull_prompt).
     - values (Dict[str, Any]): A dictionary where keys match the variable names used in the prompt template.
 
     Response:
     - Union[str, List[PromptMessage]]: The rendered result as a string for TEXT prompts, or a list of messages for LIST prompts.
     """
     # Uses the local logic in utils.py
-    return interpolate_prompt_data(request.config, request.values)
+    return interpolate_prompt_data(request.prompt_data, request.values)
 
 @mcp.tool()
 async def push_prompt(request: PushRequest) -> PromptResponse:
     """
-    This tool can be used to create new or save modifications made to a prompt's template or configuration back to Confident AI. 
+    This tool can be used to create new or save modifications made to a prompt's template or prompt_datauration back to Confident AI. 
     Every push creates a new commit in the prompt's history, allowing you to track changes over time.
     Note that this does not automatically create a new version string unless create_prompt_version is called afterward.
     Simply using this tool with appropriate data will create a prompt on the Confident AI platform
 
     Args:
     - request
-    - config (PromptData): The updated prompt data to be saved to the platform.
+    - prompt_data (PromptData): The updated prompt data to be saved to the platform.
     - message (Optional[str]): A commit message to describe the changes being made.
 
     Response:
     - PromptResponse: Contains the updated 'data' (the prompt's data), the new commit 'hash', and the current 'version'.
     """
     body = {
-        "alias": request.config.alias,
-        "interpolationType": request.config.interpolation_type,
+        "alias": request.prompt_data.alias,
+        "interpolationType": request.prompt_data.interpolation_type,
         "message": request.message
     }
 
-    if request.config.text_template is not None:
-        body["text"] = request.config.text_template
+    if request.prompt_data.text_template is not None:
+        body["text"] = request.prompt_data.text_template
 
-    if request.config.messages_template is not None:
+    if request.prompt_data.messages_template is not None:
         body["messages"] = [
-            m.model_dump() for m in request.config.messages_template
+            m.model_dump() for m in request.prompt_data.messages_template
         ]
     
     response = await api.send_request(
@@ -129,7 +130,7 @@ async def push_prompt(request: PushRequest) -> PromptResponse:
     
     data = response.data
     return PromptResponse(
-        config=request.config,
+        prompt_data=request.prompt_data,
         hash=data.get("hash", "latest"),
         version=data.get("version")
     )
@@ -149,14 +150,16 @@ async def create_prompt_version(request: CreateVersionRequest) -> str:
     - str: A confirmation message indicating the version was successfully created for the specified hash.
     """
     body = {"hash": request.hash}
-    await api.send_request(
+    response = await api.send_request(
         method=HttpMethods.POST,
         endpoint=Endpoints.PROMPTS_VERSIONS_ENDPOINT,
         path_params={"alias": request.alias},
         body=body
     )
+
+    response_data = CreateVersionResponse.model_validate(response.data)
     
-    return f"Successfully created version {request.version} for prompt {request.alias}"
+    return f"Successfully created version {response_data.version} for prompt hash {response_data.hash}"
 
 @mcp.tool()
 async def list_prompt_versions(request: ListVersionsRequest) -> ListVersionsResponse:
@@ -210,7 +213,7 @@ async def list_prompts() -> ListPromptsResponse:
     """
     response = await api.send_request(
         method=HttpMethods.GET,
-        endpoint=Endpoints.PROMPTS_COMMITS_ENDPOINT,
+        endpoint=Endpoints.PROMPTS_ENDPOINT,
     )
     
     return ListPromptsResponse.model_validate(response.data)

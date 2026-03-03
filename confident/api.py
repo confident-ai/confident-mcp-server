@@ -76,6 +76,8 @@ class Endpoints(Enum):
     EVALUATE_THREAD_ENDPOINT = "/v1/evaluate/threads/:threadId"
     EVALUATE_TRACE_ENDPOINT = "/v1/evaluate/traces/:traceUuid"
     EVALUATE_SPAN_ENDPOINT = "/v1/evaluate/spans/:spanUuid"
+    EVALUATE_ENDPOINT = "/v1/evaluate"
+    SIMULATE_ENDPOINT = "/v1/simulate"
 
     TRACES_ENDPOINT = "/v1/traces"
     TRACE_ID_ENDPOINT =  "/v1/traces/:traceUuid"

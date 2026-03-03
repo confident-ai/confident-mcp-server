@@ -32,7 +32,7 @@ class PromptData(BaseModel):
 
 
 class PromptResponse(BaseModel):
-    config: PromptData
+    prompt_data: PromptData
     hash: str
     version: Optional[str] = None
     label: Optional[str] = None
@@ -45,16 +45,20 @@ class PullRequest(BaseModel):
 
 
 class InterpolateRequest(BaseModel):
-    config: PromptData
+    prompt_data: PromptData
     values: Dict[str, Any]
 
 
 class PushRequest(BaseModel):
-    config: PromptData
+    prompt_data: PromptData
     message: Optional[str] = "Updated via MCP Server"
 
 class CreateVersionRequest(BaseModel):
     alias: str
+    hash: str
+
+class CreateVersionResponse(BaseModel):
+    version: str
     hash: str
 
 class PromptVersionItem(BaseModel):
