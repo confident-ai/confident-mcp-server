@@ -93,9 +93,7 @@ Add the following to your `.cursor/mcp.json` file:
 **Claude Code** — run the following command in your terminal:
 
 ```bash
-claude mcp add confident-ai \
-  --transport sse \
-  --url https://mcp.confident-ai.com/mcp \
+claude mcp add --transport sse confident-ai https://mcp.confident-ai.com/mcp \
   --header "Authorization: Bearer <YOUR_CONFIDENT_API_KEY>"
 ```
 
