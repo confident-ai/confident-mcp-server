@@ -30,7 +30,7 @@ class ListAnnotationsRequest(BaseModel):
     start: Optional[str] = None
     end: Optional[str] = None
     sort_by: Optional[Literal["createdAt"]] = Field("createdAt", alias="sortBy")
-    ascending: Optional[Literal["asc", "desc"]] = None
+    ascending: Optional[Literal["true", "false"]] = "false"
 
 class ListAnnotationsResponse(BaseModel):
     model_config = ConfigDict(populate_by_name=True)

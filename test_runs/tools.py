@@ -21,7 +21,7 @@ async def list_test_runs(request: ListTestRunsRequest) -> ListTestRunsResponse:
        - status (Optional[str]): Filter by 'COMPLETED', 'ERRORED', 'IN_PROGRESS', or 'CANCELLED'.
        - multiTurn (Optional[str]): Filter for multi-turn tests ("true" or "false").
        - sortBy (Optional[str]): Sort by 'createdAt' or 'runDuration'.
-       - ascending (Optional[str]): Sort ascending ("true" or "false").
+       - ascending (Optional[Literal["true", "false"]]): Sort ascending as string ("true" or "false")
        - start / end (Optional[str]): ISO datetime filters.
        - page / pageSize (Optional[int]): Pagination controls.
 

@@ -145,7 +145,7 @@ class ListTracesRequest(BaseModel):
     start: Optional[str] = None
     end: Optional[str] = None
     sort_by: Optional[Literal["createdAt", "endedAt"]] = Field("createdAt", alias="sortBy")
-    ascending: Optional[Literal["asc", "desc"]] = None
+    ascending: Optional[Literal["true", "false"]] = "false"
 
 class ListTracesResponse(BaseModel):
     traces: List[TraceSummary]
@@ -170,7 +170,7 @@ class ListThreadsRequest(BaseModel):
     start: Optional[str] = None
     end: Optional[str] = None
     sort_by: Optional[Literal["createdAt", "lastActivity"]] = Field("lastActivity", alias="sortBy")
-    ascending: Optional[Literal["asc", "desc"]] = None
+    ascending: Optional[Literal["true", "false"]] = "false"
 
 class ListThreadsResponse(BaseModel):
     threads: List[ThreadSummary]
@@ -199,7 +199,7 @@ class ListSpansRequest(BaseModel):
     start: Optional[str] = None
     end: Optional[str] = None
     sort_by: Optional[Literal["createdAt", "endedAt", "cost", "duration", "name"]] = Field("createdAt", alias="sortBy")
-    ascending: Optional[Literal["asc", "desc"]] = None
+    ascending: Optional[Literal["true", "false"]] = "false"
     environment: Optional[Literal["production", "testing", "development", "staging"]] = None
     type: Optional[str] = None  # e.g., 'agent', 'llm', 'retriever', 'tool'
     trace_uuid: Optional[str] = Field(None, alias="traceUuid")
