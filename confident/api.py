@@ -5,6 +5,7 @@ from enum import Enum
 from contextvars import ContextVar
 from typing import Optional, Any, Dict
 from .types import ApiResponse, ConfidentApiError
+from mcp_logger import logger
 
 confident_api_key: ContextVar[Optional[str]] = ContextVar("confident_api_key", default=None)
 
@@ -115,6 +116,8 @@ class Api:
         url = f"{self.base_api_url}{endpoint_path}"
 
         resolved_key = confident_api_key.get() or os.getenv("CONFIDENT_API_KEY") # Fallback to environment variable for people running the server locally
+
+        logger.info(f"Request: {method.value} - {url} - CONFIDENT_KEY - {resolved_key}")
 
         request_headers = self.base_headers.copy()
         if resolved_key:
