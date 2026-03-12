@@ -11,6 +11,7 @@ from .types import (
     DatasetResponse,
     ListDatasetsResponse,
 )
+from mcp_logger import logger
 
 api = Api()
 
@@ -27,6 +28,7 @@ async def pull_dataset(request: PullDatasetRequest) -> DatasetResponse:
     Response:
      - DatasetResponse: Contains the 'dataset' state (alias and list of goldens) and the dataset ID.
     """
+    logger.info(f"Called tool 'pull_dataset' with params: {request.model_dump(exclude_none=True)}")
     response = await api.send_request(
         method=HttpMethods.GET,
         endpoint=Endpoints.DATASET_ALIAS_ENDPOINT,
@@ -85,6 +87,7 @@ async def list_datasets() -> ListDatasetsResponse:
     Response:
      - ListDatasetsResponse: Contains a list of 'datasets', each with an 'id', 'alias', and 'multiTurn' boolean.
     """
+    logger.info(f"Called tool 'list_datasets'.")
     response = await api.send_request(
         method=HttpMethods.GET,
         endpoint=Endpoints.DATASETS_ENDPOINT,

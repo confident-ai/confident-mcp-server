@@ -9,6 +9,7 @@ from .types import (
     UpdateAnnotationRequest,
     AnnotationMutationResponseData
 )
+from mcp_logger import logger
 
 api = Api()
 
@@ -30,6 +31,7 @@ async def list_annotations(request: ListAnnotationsRequest) -> ListAnnotationsRe
     Response:
      - ListAnnotationsResponse: Contains the list of annotations and pagination metadata (total, limit, offset).
     """
+    logger.info(f"Called tool 'list_annotations' with params: {request.model_dump(exclude_none=True)}")
     response = await api.send_request(
         method=HttpMethods.GET,
         endpoint=Endpoints.ANNOTATIONS_ENDPOINT,
@@ -51,6 +53,7 @@ async def get_annotation(request: GetAnnotationRequest) -> Annotation:
     Response:
      - Annotation: The complete annotation details, including expected outputs and explanations.
     """
+    logger.info(f"Called tool 'get_annotation' with params: {request.model_dump(exclude_none=True)}")
     response = await api.send_request(
         method=HttpMethods.GET,
         endpoint=Endpoints.ANNOTATION_ID_ENDPOINT,
@@ -86,6 +89,7 @@ async def create_annotation(request: CreateAnnotationRequest) -> AnnotationMutat
     Response:
      - AnnotationMutationResponseData: Contains the 'id' of the newly created annotation.
     """
+    logger.info(f"Called tool 'create_annotation' with params: {request.model_dump(exclude_none=True)}")
     response = await api.send_request(
         method=HttpMethods.POST,
         endpoint=Endpoints.ANNOTATIONS_ENDPOINT,
@@ -114,6 +118,7 @@ async def update_annotation(request: UpdateAnnotationRequest) -> AnnotationMutat
     Response:
      - AnnotationMutationResponseData: Contains the 'id' of the successfully updated annotation.
     """
+    logger.info(f"Called tool 'update_annotation' with params: {request.model_dump(exclude_none=True)}")
     response = await api.send_request(
         method=HttpMethods.PUT,
         endpoint=Endpoints.ANNOTATION_ID_ENDPOINT,

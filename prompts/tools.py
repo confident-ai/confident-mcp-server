@@ -17,6 +17,7 @@ from .types import (
     ListPromptsResponse
 )
 from .utils import interpolate_prompt_data
+from mcp_logger import logger
 
 api = Api()
 
@@ -36,6 +37,7 @@ async def pull_prompt(request: PullRequest) -> PromptResponse:
     Response:
      - PromptResponse: Contains the 'data' (the prompt's data), current 'hash', 'version', and 'label' and either text or messages depending on prompt type.
     """
+    logger.info(f"Called tool 'pull_prompt' with params: {request.model_dump(exclude_none=True)}")
     path_params = {"alias": request.alias}
     if request.method == "version":
         endpoint = Endpoints.PROMPTS_VERSION_ID_ENDPOINT
@@ -89,6 +91,7 @@ def interpolate_prompt(request: InterpolateRequest) -> Union[str, List[PromptMes
     Response:
     - Union[str, List[PromptMessage]]: The rendered result as a string for TEXT prompts, or a list of messages for LIST prompts.
     """
+    logger.info(f"Called tool 'interpolate_prompt'.")
     # Uses the local logic in utils.py
     return interpolate_prompt_data(request.prompt_data, request.values)
 
@@ -108,6 +111,7 @@ async def push_prompt(request: PushRequest) -> PromptResponse:
     Response:
     - PromptResponse: Contains the updated 'data' (the prompt's data), the new commit 'hash', and the current 'version'.
     """
+    logger.info(f"Called tool 'push_prompt' with params: {request.model_dump(exclude_none=True)}")
     body = {
         "alias": request.prompt_data.alias,
         "interpolationType": request.prompt_data.interpolation_type,
@@ -149,6 +153,7 @@ async def create_prompt_version(request: CreateVersionRequest) -> str:
     Response:
     - str: A confirmation message indicating the version was successfully created for the specified hash.
     """
+    logger.info(f"Called tool 'create_prompt_version' with params: {request.model_dump(exclude_none=True)}")
     body = {"hash": request.hash}
     response = await api.send_request(
         method=HttpMethods.POST,
@@ -174,6 +179,7 @@ async def list_prompt_versions(request: ListVersionsRequest) -> ListVersionsResp
     Response:
      - ListVersionsResponse: Contains lists of 'textVersions' and 'messagesVersions' associated with the prompt.
     """
+    logger.info(f"Called tool 'list_prompt_versions' with params: {request.model_dump(exclude_none=True)}")
     response = await api.send_request(
         method=HttpMethods.GET,
         endpoint=Endpoints.PROMPTS_VERSIONS_ENDPOINT,
@@ -195,6 +201,7 @@ async def list_prompt_commits(request: ListCommitsRequest) -> ListCommitsRespons
     Response:
      - ListCommitsResponse: Contains a list of 'commits', detailing the 'id', 'hash', and 'message' for each.
     """
+    logger.info(f"Called tool 'list_prompt_commits' with params: {request.model_dump(exclude_none=True)}")
     response = await api.send_request(
         method=HttpMethods.GET,
         endpoint=Endpoints.PROMPTS_COMMITS_ENDPOINT,
@@ -211,6 +218,7 @@ async def list_prompts() -> ListPromptsResponse:
     Response:
      - ListPromptsResponse: Contains a list of 'prompts', each with an 'id', 'alias', and 'type'.
     """
+    logger.info(f"Called tool 'list_prompts'.")
     response = await api.send_request(
         method=HttpMethods.GET,
         endpoint=Endpoints.PROMPTS_ENDPOINT,

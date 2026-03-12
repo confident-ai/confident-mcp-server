@@ -17,17 +17,18 @@ from .types import (
     GetSpanRequest,
     SpanData
 )
+from mcp_logger import logger
 
 api = Api()
 
 @mcp.tool()
-async def evaluate_span(evaluate_span_request_body: EvaluateSpanRequestBody, span_uuid: str):
+async def evaluate_span(request: EvaluateSpanRequestBody, span_uuid: str):
     """
     This tool can be used to trigger a remote evaluation for a specific span within a trace on Confident AI. 
     Use this when you want to evaluate a granular step of your LLM application (like a retrieval step or a specific tool call) against a predefined metric collection.
 
     Args:
-    - evaluate_span_request_body
+    - request
     - metric_collection (str): The name of the metric collection to use for evaluation.
     - overwrite_metrics (bool): Whether to overwrite existing evaluation results for this span.
     - span_uuid (str): The unique identifier (UUID) of the span to be evaluated.
@@ -35,10 +36,11 @@ async def evaluate_span(evaluate_span_request_body: EvaluateSpanRequestBody, spa
     Response:
     - str: A success message with the evaluation ID or a detailed failure message.
     """
+    logger.info(f"Called tool 'evaluate_span' with params: {request.model_dump()} for span id - {span_uuid}")
     response = await api.send_request(
         method=HttpMethods.POST,
         endpoint=Endpoints.EVALUATE_SPAN_ENDPOINT,
-        body=evaluate_span_request_body.model_dump(by_alias=True, exclude_none=True),
+        body=request.model_dump(by_alias=True, exclude_none=True),
         path_params={"spanUuid": span_uuid},
     )
 
@@ -50,13 +52,13 @@ async def evaluate_span(evaluate_span_request_body: EvaluateSpanRequestBody, spa
     
 
 @mcp.tool()
-async def evaluate_thread(evaluate_thread_request_body: EvaluateThreadRequestBody, thread_id: str):
+async def evaluate_thread(request: EvaluateThreadRequestBody, thread_id: str):
     """
     This tool can be used to trigger a remote evaluation for an entire conversation thread on Confident AI. 
     Use this to evaluate multi-turn interactions and ensure consistency and quality across a full session.
 
     Args:
-    - evaluate_thread_request_body
+    - request
     - metric_collection (str): The name of the metric collection to use for evaluation. Must be a multi-turn metric collection
     - overwrite_metrics (bool): Whether to overwrite existing evaluation results for this thread.
     - chatbot_role (Optional[str]): The role name assigned to the chatbot in this thread for evaluation context.
@@ -65,10 +67,11 @@ async def evaluate_thread(evaluate_thread_request_body: EvaluateThreadRequestBod
     Response:
     - str: A success message with the evaluation ID or a detailed failure message.
     """
+    logger.info(f"Called tool 'evaluate_thread' with params: {request.model_dump()} for thread id - {thread_id}")
     response = await api.send_request(
         method=HttpMethods.POST,
         endpoint=Endpoints.EVALUATE_THREAD_ENDPOINT,
-        body=evaluate_thread_request_body.model_dump(by_alias=True, exclude_none=True),
+        body=request.model_dump(by_alias=True, exclude_none=True),
         path_params={"threadId": thread_id},
     )
 
@@ -79,13 +82,13 @@ async def evaluate_thread(evaluate_thread_request_body: EvaluateThreadRequestBod
         return f"Failed to trigger thread evaluation for thread {thread_id}. Response: {response}"
 
 @mcp.tool()
-async def evaluate_trace(evaluate_trace_request_body: EvaluateTraceRequestBody, trace_uuid: str):
+async def evaluate_trace(request: EvaluateTraceRequestBody, trace_uuid: str):
     """
     This tool can be used to trigger a remote evaluation for an entire trace on Confident AI. 
     A trace represents a single end-to-end request in your LLM application. Use this to evaluate the overall performance of a specific execution.
 
     Args:
-    - evaluate_trace_request_body
+    - request
     - metric_collection (str): The name of the metric collection to use for evaluation.
     - overwrite_metrics (bool): Whether to overwrite existing evaluation results for this trace.
     - trace_uuid (str): The unique identifier (UUID) of the trace to be evaluated.
@@ -93,10 +96,11 @@ async def evaluate_trace(evaluate_trace_request_body: EvaluateTraceRequestBody, 
     Response:
     - str: A success message with the evaluation ID or a detailed failure message.
     """
+    logger.info(f"Called tool 'evaluate_trace' with params: {request.model_dump()} for thread id - {trace_uuid}")
     response = await api.send_request(
         method=HttpMethods.POST,
         endpoint=Endpoints.EVALUATE_TRACE_ENDPOINT,
-        body=evaluate_trace_request_body.model_dump(by_alias=True, exclude_none=True),
+        body=request.model_dump(by_alias=True, exclude_none=True),
         path_params={"traceUuid": trace_uuid},
     )
 
@@ -120,6 +124,7 @@ async def get_trace(request: GetTraceRequest) -> TraceData:
     Response:
      - TraceData: The complete trace details, including metadata, tags, and all associated spans.
     """
+    logger.info(f"Called tool 'get_trace' with params: {request.model_dump(exclude_none=True)}")
     response = await api.send_request(
         method=HttpMethods.GET,
         endpoint=Endpoints.TRACE_ID_ENDPOINT,
@@ -148,6 +153,7 @@ async def list_traces(request: ListTracesRequest) -> ListTracesResponse:
     Response:
      - ListTracesResponse: A list of trace summaries and the total count available.
     """
+    logger.info(f"Called tool 'list_trace' with params: {request.model_dump(exclude_none=True)}")
     response = await api.send_request(
         method=HttpMethods.GET,
         endpoint=Endpoints.TRACES_ENDPOINT,
@@ -176,6 +182,7 @@ async def list_threads(request: ListThreadsRequest) -> ListThreadsResponse:
     Response:
      - ListThreadsResponse: A list of thread summaries and the total count available.
     """
+    logger.info(f"Called tool 'list_threads' with params: {request.model_dump(exclude_none=True)}")
     response = await api.send_request(
         method=HttpMethods.GET,
         endpoint=Endpoints.THREADS_ENDPOINT,
@@ -199,6 +206,7 @@ async def get_thread(request: GetThreadRequest) -> ThreadDetail:
      - ThreadDetail: The complete thread details, including metadata, tags, annotations, 
        metrics data, and all associated traces within the thread.
     """
+    logger.info(f"Called tool 'get_thread' with params: {request.model_dump(exclude_none=True)}")
     response = await api.send_request(
         method=HttpMethods.GET,
         endpoint=Endpoints.THREAD_ID_ENDPOINT,
@@ -228,6 +236,7 @@ async def list_spans(request: ListSpansRequest) -> ListSpansResponse:
     Response:
      - ListSpansResponse: A paginated list of spans (excludes deep details like metrics/annotations).
     """
+    logger.info(f"Called tool 'list_spans' with params: {request.model_dump(exclude_none=True)}")
     response = await api.send_request(
         method=HttpMethods.GET,
         endpoint=Endpoints.SPANS_ENDPOINT,
@@ -250,6 +259,7 @@ async def get_span(request: GetSpanRequest) -> SpanData:
     Response:
      - SpanData: The complete span details, including I/O, prompt tracking, cost, metrics, and annotations.
     """
+    logger.info(f"Called tool 'get_span' with params: {request.model_dump(exclude_none=True)}")
     response = await api.send_request(
         method=HttpMethods.GET,
         endpoint=Endpoints.SPAN_ID_ENDPOINT,
