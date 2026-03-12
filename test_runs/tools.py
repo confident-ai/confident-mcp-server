@@ -6,6 +6,7 @@ from .types import (
     GetTestRunRequest,
     GetTestRunResponseData
 )
+from mcp_logger import logger
 
 api = Api()
 
@@ -28,6 +29,7 @@ async def list_test_runs(request: ListTestRunsRequest) -> ListTestRunsResponse:
     Response:
      - ListTestRunsResponse: A list of test runs containing pass/fail metrics, duration, and AI-generated summaries.
     """
+    logger.info(f"Called tool 'list_test_runs' with params: {request.model_dump(exclude_none=True)}")
     response = await api.send_request(
         method=HttpMethods.GET,
         endpoint=Endpoints.TEST_RUNS_ENDPOINT,
@@ -51,6 +53,7 @@ async def get_test_run(request: GetTestRunRequest) -> GetTestRunResponseData:
      - GetTestRunResponseData: Detailed results containing aggregated metric scores and a 
        full list of evaluated test cases (including multi-turn conversations).
     """
+    logger.info(f"Called tool 'get_test_run' with params: {request.model_dump(exclude_none=True)}")
     response = await api.send_request(
         method=HttpMethods.GET,
         endpoint=Endpoints.TEST_RUN_ID_ENDPOINT,

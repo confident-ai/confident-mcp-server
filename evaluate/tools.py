@@ -6,6 +6,7 @@ from .types import (
     SimulateRequest,
     SimulateResponseData
 )
+from mcp_logger import logger
 
 api = Api()
 
@@ -25,6 +26,7 @@ async def run_llm_evals(request: EvaluateRequest) -> EvaluateResponseData:
     Response:
      - EvaluateResponseData: Contains the unique 'id' of the newly created test run.
     """
+    logger.info(f"Called tool 'run_llm_evals' with params: {request.model_dump(exclude_none=True)}")
     response = await api.send_request(
         method=HttpMethods.POST,
         endpoint=Endpoints.EVALUATE_ENDPOINT,
@@ -50,6 +52,7 @@ async def simulate_conversation(request: SimulateRequest) -> SimulateResponseDat
      - SimulateResponseData: Contains the new simulated 'userResponse', whether the outcome is 'completed', 
        and the updated 'turns' list.
     """
+    logger.info(f"Called tool 'simulate_conversation' with params: {request.model_dump(exclude_none=True)}")
     response = await api.send_request(
         method=HttpMethods.POST,
         endpoint=Endpoints.SIMULATE_ENDPOINT,
