@@ -18,9 +18,8 @@ class LoggingMiddleware(BaseHTTPMiddleware):
         client_ip = request.client.host
         method = request.method
         url = request.url.path
-        environment = os.environ["CONFIDENT_ENVIRONMENT"]
         
-        logger.info(f"Incoming {method} {url} from {client_ip} environment - {environment}")
+        logger.info(f"Incoming {method} - {url} from {client_ip}")
         
         response = await call_next(request)
         
