@@ -2,7 +2,7 @@ import uvicorn
 from fastapi import FastAPI, HTTPException, Request, Depends
 from mcp.server.sse import SseServerTransport
 from fastapi.middleware.cors import CORSMiddleware
-from mcp_logger import logger, AuditLoggingMiddleware
+from mcp_logger import logger, LoggingMiddleware
 
 
 from confident_mcp import mcp
@@ -26,7 +26,7 @@ async def set_auth(request: Request):
 
 sse = SseServerTransport("/messages")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
-app.add_middleware(AuditLoggingMiddleware)
+app.add_middleware(LoggingMiddleware)
 
 @app.get("/mcp") # Usually used as /sse but using /mcp for convention
 async def handle_sse(request: Request):

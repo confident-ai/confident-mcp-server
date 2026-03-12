@@ -13,7 +13,7 @@ logging.basicConfig(
 logger = logging.getLogger("confident-mcp")
 
 
-class AuditLoggingMiddleware(BaseHTTPMiddleware):
+class LoggingMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
         client_ip = request.client.host
         method = request.method
